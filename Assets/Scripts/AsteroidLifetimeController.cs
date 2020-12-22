@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class AsteroidLifetimeController : MonoBehaviour
 {
-
-    [SerializeField]
-    GameObject explosion;
-
     public delegate void OnDemage(Transform currentAsteroidOnDamage);
     public static event OnDemage OnDamageAsteroid;
 

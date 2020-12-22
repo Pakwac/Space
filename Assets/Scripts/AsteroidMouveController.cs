@@ -13,7 +13,7 @@ public class AsteroidMouveController : MonoBehaviour
 
 
     Rigidbody rb;
-    // Start is called before the first frame update
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -21,13 +21,4 @@ public class AsteroidMouveController : MonoBehaviour
         rb.angularVelocity = new Vector3(1, 1, 1) * 2;
         rb.velocity = -Vector3.forward * speed;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-        
-    }
-
-    
 }

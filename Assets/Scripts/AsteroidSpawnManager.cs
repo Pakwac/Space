@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AsteroidSpawnManager : MonoBehaviour
 {
-    //[SerializeField]
-    //GameObject asteroid;
     Camera cam;
 
     public delegate void SpawnAsteroidNeed(Vector3 spawnPosition);

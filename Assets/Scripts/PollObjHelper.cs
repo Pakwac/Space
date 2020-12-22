@@ -4,32 +4,32 @@ using UnityEngine;
 
 public class PollObjHelper 
 {
-    
+    GameObject currentgo;
     List<GameObject> list = new List<GameObject>();
-    Vector3 speed;
-    
-    public void Spawn(Vector3 position, GameObject go)
+
+    public GameObject Spawn(Vector3 position, List<GameObject> go)
     {
         if (list.Exists(e => e.activeSelf == false))
         {
-            var currentgo = list.Find(x => x.activeSelf == false);
+            currentgo = list.Find(x => x.activeSelf == false);
             currentgo.transform.position = position;
             currentgo.SetActive(true);
         }
         else
         {
-                var currentgo = MonoBehaviour.Instantiate<GameObject>(go);
-                currentgo.transform.position = position;
-                currentgo.SetActive(true);
-                list.Add(currentgo);
+            currentgo = MonoBehaviour.Instantiate<GameObject>(go[Random.Range(0, go.Count)]);
+            currentgo.transform.position = position;
+            currentgo.SetActive(true);
+            list.Add(currentgo);
         }
+        return currentgo;
     }
 
-    public void Spawn(Vector3 position, GameObject go, Vector3 speed)
+    public GameObject Spawn(Vector3 position, List<GameObject> go, Vector3 speed)
     {
         if (list.Exists(e => e.activeSelf == false))
         {
-            var currentgo = list.Find(x => x.activeSelf == false);
+            currentgo = list.Find(x => x.activeSelf == false);
             currentgo.transform.position = position;
             if (currentgo.GetComponent<Rigidbody>() != null)
             {
@@ -41,11 +41,48 @@ public class PollObjHelper
         }
         else
         {
-                var currentgo = MonoBehaviour.Instantiate<GameObject>(go);
+                currentgo = MonoBehaviour.Instantiate<GameObject>(go[Random.Range(0, go.Count)]);
                 currentgo.transform.position = position;
                 currentgo.SetActive(true);
+            if (currentgo.GetComponent<Rigidbody>() != null)
+            {
+                currentgo.GetComponent<Rigidbody>().velocity = speed;
+                currentgo.GetComponent<Rigidbody>().angularVelocity = Random.insideUnitSphere;
+                currentgo.GetComponent<Transform>().rotation = Random.rotation;
+            }
                 list.Add(currentgo);
         }
+        return currentgo;
+    }
+
+    public GameObject Spawn(Vector3 position, List<GameObject> go, Vector3 speed, Quaternion rotation)
+    {
+        if (list.Exists(e => e.activeSelf == false))
+        {
+            currentgo = list.Find(x => x.activeSelf == false);
+            currentgo.transform.position = position;
+            if (currentgo.GetComponent<Rigidbody>() != null)
+            {
+                currentgo.GetComponent<Rigidbody>().velocity = speed;
+                currentgo.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                currentgo.GetComponent<Transform>().rotation = Quaternion.identity;
+            }
+            currentgo.SetActive(true);
+        }
+        else
+        {
+            currentgo = MonoBehaviour.Instantiate<GameObject>(go[Random.Range(0, go.Count)]);
+            currentgo.transform.position = position;
+            currentgo.SetActive(true);
+            if (currentgo.GetComponent<Rigidbody>() != null)
+            {
+                currentgo.GetComponent<Rigidbody>().velocity = speed;
+                currentgo.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                currentgo.GetComponent<Transform>().rotation = Quaternion.identity;
+            }
+            list.Add(currentgo);
+        }
+        return currentgo;
     }
 
     public void OnDamage(Transform currentOnDamage)

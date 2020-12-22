@@ -88,8 +88,6 @@
     <Compile Include="Assets\Scripts\PollObjHelper.cs" />
     <Compile Include="Assets\Scripts\PoolObjManager.cs" />
     <Compile Include="Assets\Scripts\ShotController.cs" />
-    <Compile Include="Assets\TestCollback.cs" />
-    <Compile Include="Assets\TestDelegate.cs" />
     <Compile Include="Assets\VolumetricLines\BuiltInRenderPipeline\ExampleScenes\ExampleScripts\CannonBehavior.cs" />
     <Compile Include="Assets\VolumetricLines\BuiltInRenderPipeline\ExampleScenes\ExampleScripts\CreateSinShapedLineStrip.cs" />
     <Compile Include="Assets\VolumetricLines\BuiltInRenderPipeline\ExampleScenes\ExampleScripts\ShotBehavior.cs" />

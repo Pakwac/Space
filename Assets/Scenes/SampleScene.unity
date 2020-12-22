@@ -462,10 +462,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19bc3fc1263130e4f99c2f1da6a45519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asteroid: {fileID: 4914380644739666304, guid: c28c72fdb64b2914a9d6b090cbb93b63,
-    type: 3}
-  explosion: {fileID: 5404804235443802385, guid: 5c0ca9de1b737da40a471470079a5659,
-    type: 3}
+  asteroid:
+  - {fileID: 8118306733822113827, guid: 419fe930e6424a144aea359dc969e545, type: 3}
+  - {fileID: 6042874029642736702, guid: 5d9b1214250d60e4aaae7af1933f7ab6, type: 3}
+  - {fileID: 4749783420000038198, guid: 4bf12ce122e06394493529fadac8440d, type: 3}
+  explosion:
+  - {fileID: 5404804235443802385, guid: 5c0ca9de1b737da40a471470079a5659, type: 3}
+  shoot:
+  - {fileID: 348061526460289374, guid: dac67040679069b49bfec15add5109ef, type: 3}
+  shootPosition: {fileID: 2035203402}
 --- !u!4 &1381961514
 Transform:
   m_ObjectHideFlags: 0
@@ -539,8 +544,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11d611c378d85ab41b41dd65bd7f893a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootSpawn: {fileID: 2035203402}
-  shot: {fileID: 348061526460289374, guid: dac67040679069b49bfec15add5109ef, type: 3}
   fireRate: 0.2
   nextFire: 0
 --- !u!1 &2035203401
@@ -647,7 +650,6 @@ GameObject:
   - component: {fileID: 9014710185184935395}
   - component: {fileID: 9014710185196692457}
   - component: {fileID: 9014710185187191646}
-  - component: {fileID: 9014710185187191644}
   m_Layer: 0
   m_Name: Spaceship
   m_TagString: Player
@@ -655,19 +657,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &9014710185187191644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9014710185187191643}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f17b826db8ba046a263080d31559ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  motherSheep: {fileID: 1876387900}
 --- !u!136 &9014710185187191646
 CapsuleCollider:
   m_ObjectHideFlags: 0

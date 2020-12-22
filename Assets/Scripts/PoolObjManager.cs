@@ -5,20 +5,27 @@ using UnityEngine;
 public class PoolObjManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject asteroid;
+    List<GameObject> asteroid = new List<GameObject>();
     [SerializeField]
-    GameObject explosion;
-    List<GameObject> asteroids = new List<GameObject>();
+    List<GameObject> explosion = new List<GameObject>();
+    [SerializeField]
+    List<GameObject> shoot = new List<GameObject>();   
     PollObjHelper Asteroids;
     PollObjHelper Explosion;
-    // Start is called before the first frame update
+    PollObjHelper Shoots;
+    [SerializeField]
+    Transform shootPosition;
+
+    
     void Start()
     {
         AsteroidSpawnManager.NeedSpawnAsteroid += SpawnAsteroid;
         AsteroidLifetimeController.OnDamageAsteroid += AsteroidOnDestroy;
         ExplosionLifetimeController.explosionLifeTime += ExplosionLifeTime;
+        PlayerShootController.onFires += OnShoot;
         Asteroids = new PollObjHelper();
         Explosion = new PollObjHelper();
+        Shoots = new PollObjHelper();
     }
 
     private void SpawnAsteroid(Vector3 asteroidPosition)
@@ -28,13 +35,20 @@ public class PoolObjManager : MonoBehaviour
 
     private void AsteroidOnDestroy(Transform currentAsteroidOnDamage)
     {
-        Explosion.Spawn(currentAsteroidOnDamage.position, explosion);
+       
         Asteroids.OnDamage(currentAsteroidOnDamage);
+        var boom = Explosion.Spawn(currentAsteroidOnDamage.position, explosion);
+        boom.gameObject.GetComponent<Detonator>().Explode();
     }
 
     private void ExplosionLifeTime(Transform position)
     {
         Explosion.OnDamage(position);
+    }
+
+    private void OnShoot()
+    {
+        Shoots.Spawn(shootPosition.position, shoot, Vector3.forward * 100, Quaternion.identity);
     }
 }
 
