@@ -228,7 +228,7 @@ GameObject:
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -400,6 +400,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1258108080}
   - component: {fileID: 1258108079}
+  - component: {fileID: 1258108081}
   m_Layer: 0
   m_Name: AsteroidSpawnManager
   m_TagString: Untagged
@@ -433,6 +434,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1258108081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258108078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65d09e7fd6e6e3c4fb1d0d88addbf289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveTime: 10
+  spawnTime: 1
 --- !u!1 &1381961512
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,6 +485,8 @@ MonoBehaviour:
   - {fileID: 5404804235443802385, guid: 5c0ca9de1b737da40a471470079a5659, type: 3}
   shoot:
   - {fileID: 348061526460289374, guid: dac67040679069b49bfec15add5109ef, type: 3}
+  enemy:
+  - {fileID: 6145994467371103332, guid: 84f90d5be5df378469cf2405eeac265a, type: 3}
   shootPosition: {fileID: 2035203402}
 --- !u!4 &1381961514
 Transform:
@@ -511,7 +528,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1876387900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.86, y: 0, z: 50.1}
+  m_LocalPosition: {x: 0.9, y: 0, z: -8.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9014710185186934285}

@@ -14,12 +14,13 @@ public class AsteroidSpawnManager : MonoBehaviour
     float z_top;
     float z_bot;
     float distance;
+    
     IEnumerator SpawnCourutine()
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(1, 3));
-
+            var i = Random.Range(1, 3);
+            yield return new WaitForSeconds(i);
             SpawnAsteroid();
         }
     }
@@ -33,6 +34,7 @@ public class AsteroidSpawnManager : MonoBehaviour
         StartCoroutine("SpawnCourutine");
     }
 
+    
     void SpawnAsteroid()
     {
         var leftBot = cam.ViewportToWorldPoint(new Vector3(0, 0));

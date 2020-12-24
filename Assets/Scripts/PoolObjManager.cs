@@ -9,10 +9,13 @@ public class PoolObjManager : MonoBehaviour
     [SerializeField]
     List<GameObject> explosion = new List<GameObject>();
     [SerializeField]
-    List<GameObject> shoot = new List<GameObject>();   
+    List<GameObject> shoot = new List<GameObject>();
+    [SerializeField]
+    List<GameObject> enemy = new List<GameObject>();
     PollObjHelper Asteroids;
     PollObjHelper Explosion;
     PollObjHelper Shoots;
+    PollObjHelper Enemys;
     [SerializeField]
     Transform shootPosition;
 
@@ -23,9 +26,13 @@ public class PoolObjManager : MonoBehaviour
         AsteroidLifetimeController.OnDamageAsteroid += AsteroidOnDestroy;
         ExplosionLifetimeController.explosionLifeTime += ExplosionLifeTime;
         PlayerShootController.onFires += OnShoot;
+        EnemySpawnManager.NeedSpawnEnemy += SpawnEnemy;
+        EnemyAi.OnDeath += DeathEnemy;
         Asteroids = new PollObjHelper();
         Explosion = new PollObjHelper();
         Shoots = new PollObjHelper();
+        Enemys = new PollObjHelper();
+
     }
 
     private void SpawnAsteroid(Vector3 asteroidPosition)
@@ -49,6 +56,17 @@ public class PoolObjManager : MonoBehaviour
     private void OnShoot()
     {
         Shoots.Spawn(shootPosition.position, shoot, Vector3.forward * 100, Quaternion.identity);
+    }
+
+    private void SpawnEnemy(Vector3 position)
+    {
+        Enemys.Spawn(position, enemy, Vector3.back * 20, Quaternion.identity);
+    }
+
+    private void DeathEnemy(Transform position)
+    {
+        Explosion.Spawn(position.position, explosion);
+        AsteroidOnDestroy(position);
     }
 }
 
