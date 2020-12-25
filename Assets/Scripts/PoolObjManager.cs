@@ -28,6 +28,7 @@ public class PoolObjManager : MonoBehaviour
         PlayerShootController.onFires += OnShoot;
         EnemySpawnManager.NeedSpawnEnemy += SpawnEnemy;
         EnemyAi.OnDeath += DeathEnemy;
+        EnemyAi.Shoot += OnShoot;
         Asteroids = new PollObjHelper();
         Explosion = new PollObjHelper();
         Shoots = new PollObjHelper();
@@ -53,9 +54,9 @@ public class PoolObjManager : MonoBehaviour
         Explosion.OnDamage(position);
     }
 
-    private void OnShoot()
+    private void OnShoot(Transform position, Vector3 speed)
     {
-        Shoots.Spawn(shootPosition.position, shoot, Vector3.forward * 100, Quaternion.identity);
+        Shoots.Spawn(position.position, shoot, speed, Quaternion.identity);
     }
 
     private void SpawnEnemy(Vector3 position)

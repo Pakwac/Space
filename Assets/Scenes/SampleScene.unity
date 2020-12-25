@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: c1db50f3ba9b0814bb31d349a216a4ad, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 16522f49031ff414abdf1f83f1b6a36c, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -486,7 +486,7 @@ MonoBehaviour:
   shoot:
   - {fileID: 348061526460289374, guid: dac67040679069b49bfec15add5109ef, type: 3}
   enemy:
-  - {fileID: 6145994467371103332, guid: 84f90d5be5df378469cf2405eeac265a, type: 3}
+  - {fileID: 3065099313209624923, guid: 84f90d5be5df378469cf2405eeac265a, type: 3}
   shootPosition: {fileID: 2035203402}
 --- !u!4 &1381961514
 Transform:
@@ -563,6 +563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 0.2
   nextFire: 0
+  shootPosition: {fileID: 2035203401}
 --- !u!1 &2035203401
 GameObject:
   m_ObjectHideFlags: 0

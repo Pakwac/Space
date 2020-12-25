@@ -88,7 +88,6 @@
     <Compile Include="Assets\Scripts\PlayerShootController.cs" />
     <Compile Include="Assets\Scripts\PollObjHelper.cs" />
     <Compile Include="Assets\Scripts\PoolObjManager.cs" />
-    <Compile Include="Assets\Scripts\PositionOnScreen.cs" />
     <Compile Include="Assets\Scripts\ShotController.cs" />
     <Compile Include="Assets\StarSparrow\Readme\Readme Files\Scripts\ReadmeStarSparrow.cs" />
     <Compile Include="Assets\VolumetricLines\BuiltInRenderPipeline\ExampleScenes\ExampleScripts\CannonBehavior.cs" />

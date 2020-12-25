@@ -6,6 +6,9 @@ public class EnemyAi : MonoBehaviour
 {
     public delegate void OnDead(Transform position);
     public static event OnDead OnDeath;
+    public delegate void OnShoot(Transform position, Vector3 speed);
+    public static event OnShoot Shoot;
+
 
 
     float speed = 10;
@@ -20,6 +23,10 @@ public class EnemyAi : MonoBehaviour
     Rigidbody rb;
     Vector3 clampedPos;
     Vector3 side;
+    [SerializeField]
+    Transform shootPosition;
+    
+
 
 
     void Start()
@@ -36,6 +43,8 @@ public class EnemyAi : MonoBehaviour
         x_right = rightTop.x;
         z_top = rightTop.z;
         z_bot = leftBot.z;
+
+        
     }
 
     IEnumerator LifeTime()
@@ -55,6 +64,16 @@ public class EnemyAi : MonoBehaviour
             side = Vector3.zero;
         }
     }    
+
+    IEnumerator ShootingCorutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            Shooting();
+            Debug.Log("Hello");
+        }
+    }
     void Update()
     {
         var tilt = Mathf.Clamp(moveX * 50, -50, 50);
@@ -73,6 +92,7 @@ public class EnemyAi : MonoBehaviour
     {
         StartCoroutine(Maneuver());
         StartCoroutine(LifeTime());
+        StartCoroutine(ShootingCorutine());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -81,5 +101,10 @@ public class EnemyAi : MonoBehaviour
         {
             OnDeath(transform);
         }
+    }
+
+    void Shooting()
+    {
+        Shoot(shootPosition, Vector3.back * 100);
     }
 }
