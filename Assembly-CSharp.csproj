@@ -79,6 +79,7 @@
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSpray.cs" />
     <Compile Include="Assets\Detonator Explosion Framework\TestScene\DetonatorTest.cs" />
     <Compile Include="Assets\Detonator Explosion Framework\TestScene\TouchToMouse.cs" />
+    <Compile Include="Assets\Scripts\BestScoreHolder.cs" />
     <Compile Include="Assets\Scripts\Items\AsteroidLifetimeController.cs" />
     <Compile Include="Assets\Scripts\Items\AsteroidSpawnManager.cs" />
     <Compile Include="Assets\Scripts\Items\EnemyAi.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Assets\Scripts\Player\PlayerMuoveController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShootController.cs" />
     <Compile Include="Assets\Scripts\ScoreHolder.cs" />
+    <Compile Include="Assets\Scripts\ScriptableScore.cs" />
     <Compile Include="Assets\Scripts\Service\PollObjHelper.cs" />
     <Compile Include="Assets\Scripts\Service\PoolObjManager.cs" />
     <Compile Include="Assets\Scripts\Service\ScoreCounter.cs" />

@@ -7,9 +7,9 @@ public class ScoreCounter : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public int score;
 
-    public delegate void Score(int score);
+    public delegate int Score(int score);
     public static event Score MaxScore;
-    // Start is called before the first frame update
+    
     void Start()
     {
         scoreText = GetComponent<TextMeshProUGUI>();
