@@ -12,21 +12,30 @@ public class PlayerShootController : MonoBehaviour
     [SerializeField]
     public GameObject shootPosition;
 
-    public struct FireTupe
-    {
+    [SerializeField]
+    int typeFire = 0;// это  поле нужно для дальнейшей реализации системы разного оружия
+    
+    PoolManager poolManager;
 
+
+    private int bulletSpeed = 100;
+
+    private void Start()
+    {
+        poolManager = PoolManager.Instance;
     }
-    public delegate void OnFire(Transform position, Vector3 speed, string tag);
-    public static event OnFire onFires;
+
     void Update()
     {
-        
             if (nextFire <= 0)
             {
                 nextFire += fireRate;
-                onFires?.Invoke(shootPosition.transform, Vector3.forward * 100, "Player");
-            }
-        
+                var bullet = poolManager.GetObjectFromPool(PoolType.Bullet);
+                bullet.transform.position = shootPosition.transform.position;
+                bullet.transform.rotation = Quaternion.identity;
+                bullet.GetComponent<Rigidbody>().velocity = Vector3.forward * bulletSpeed;
+                bullet.layer = 9;
+        }
         if (nextFire > 0) nextFire -= Time.deltaTime;
     }
 }

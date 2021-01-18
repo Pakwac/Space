@@ -6,8 +6,7 @@ public class AsteroidSpawnManager : MonoBehaviour
 {
     Camera cam;
 
-    public delegate void SpawnAsteroidNeed(Vector3 spawnPosition);
-    public static event SpawnAsteroidNeed NeedSpawnAsteroid;
+    PoolManager poolManager;
 
     float x_left;
     float x_right;
@@ -24,14 +23,15 @@ public class AsteroidSpawnManager : MonoBehaviour
             SpawnAsteroid();
         }
     }
-    // Start is called before the first frame update
+  
     void Start()
     {
+        poolManager = PoolManager.Instance;
         cam = Camera.main;
         Vector3 cameraToObject = transform.position - cam.transform.position;
         distance = -Vector3.Project(cameraToObject, cam.transform.forward).y;
 
-        StartCoroutine("SpawnCourutine");
+        StartCoroutine(SpawnCourutine());
     }
 
     
@@ -50,6 +50,13 @@ public class AsteroidSpawnManager : MonoBehaviour
         float temp = Random.value;
         Vector3 asteroidPosition = cam.ViewportToWorldPoint(new Vector3(temp, clampedPos.z, distance));
 
-        NeedSpawnAsteroid?.Invoke(asteroidPosition);
+        var asteroid = poolManager.GetObjectFromPool(PoolType.Asteroid);
+        asteroid.transform.position = asteroidPosition;
+        if (asteroid.GetComponent<Rigidbody>() != null)
+        {
+            asteroid.GetComponent<Rigidbody>().velocity = Vector3.back * Random.Range(5, 10);
+            asteroid.GetComponent<Rigidbody>().angularVelocity = Random.insideUnitSphere;
+            asteroid.GetComponent<Transform>().rotation = Random.rotation;
+        }
     }
 }

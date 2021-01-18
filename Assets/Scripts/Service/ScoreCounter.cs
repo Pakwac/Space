@@ -4,27 +4,19 @@ using UnityEngine;
 using TMPro;
 public class ScoreCounter : MonoBehaviour
 {
-    public TextMeshProUGUI scoreText;
-    public int score;
+    [SerializeField]
+    ScriptableScore scoreConteiner;
 
-    public delegate int Score(int score);
-    public static event Score MaxScore;
-    
+    public TextMeshProUGUI scoreText;
+
     void Start()
     {
         scoreText = GetComponent<TextMeshProUGUI>();
-        EnemyAi.OnDeath += ScoreCounting;
-        AsteroidLifetimeController.OnDamageAsteroid += ScoreCounting;
-
-        score = 0;
-        scoreText.text = score.ToString();
+        scoreText.text = scoreConteiner.score.ToString();
     }
 
-    
-    public void ScoreCounting(Transform position)
+    public void Update()
     {
-        score++;
-        MaxScore(score);
-        scoreText.text = score.ToString();
+        scoreText.text = scoreConteiner.score.ToString();
     }
 }

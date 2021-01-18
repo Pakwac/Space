@@ -1,31 +1,42 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AsteroidLifetimeController : MonoBehaviour
 {
-    public delegate void OnDemage(Transform currentAsteroidOnDamage);
-    public static event OnDemage OnDamageAsteroid;
+    PoolManager poolManager;
+    [SerializeField]
+    ScriptableScore scoreConteiner;
 
     float lifeTime = 15;
 
-
+    
     IEnumerator LifeTymeCycle()
     {
         yield return new WaitForSeconds(lifeTime);
-        gameObject.SetActive(false);
+        poolManager.ReturnToPool(gameObject, PoolType.Asteroid);
     }
- 
+
+    private void Start()
+    {
+        poolManager = PoolManager.Instance;
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.layer == 9)
         {
-            OnDamageAsteroid?.Invoke(transform);
+            scoreConteiner.score++;
+            var explosion = poolManager.GetObjectFromPool(PoolType.Explosion);
+            explosion.transform.position = gameObject.transform.position;
+            explosion.transform.rotation = Quaternion.identity;
+            explosion.GetComponent<Detonator>().Explode();
+            poolManager.ReturnToPool(gameObject, PoolType.Asteroid);
         }
     }
 
     private void OnEnable()
     {
-        StartCoroutine("LifeTymeCycle");
+        StartCoroutine(LifeTymeCycle());
     }
 }

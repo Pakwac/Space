@@ -4,34 +4,33 @@ using UnityEngine;
 
 public class EnemyAi : MonoBehaviour
 {
-    public delegate void OnDead(Transform position);
-    public static event OnDead OnDeath;
-    public delegate void OnShoot(Transform position, Vector3 speed, string tag);
-    public static event OnShoot Shoot;
+    [SerializeField]
+    List<GameObject> bullets;
 
+    [SerializeField]
+    int typeFire = 1;
+    
+    PoolManager poolManager;
 
+    private int bulletSpeed = 100;
 
     float speed = 10;
-    Vector3 startPosition;
     float distance;
     Camera cam;
     float x_left;
     float x_right;
-    float z_top;
-    float z_bot;
     float moveX;
-    Rigidbody rb;
     Vector3 clampedPos;
     Vector3 side;
     [SerializeField]
     Transform shootPosition;
-    
 
-
+    [SerializeField]
+    ScriptableScore scoreContainer;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        poolManager = PoolManager.Instance;
         cam = Camera.main;
         Vector3 cameraToObject = transform.position - cam.transform.position;
         distance = -Vector3.Project(cameraToObject, cam.transform.forward).y;
@@ -41,16 +40,12 @@ public class EnemyAi : MonoBehaviour
 
         x_left = leftBot.x;
         x_right = rightTop.x;
-        z_top = rightTop.z;
-        z_bot = leftBot.z;
-
-        
     }
 
     IEnumerator LifeTime()
     {
         yield return new WaitForSeconds(15);
-        OnDeath(transform);
+        poolManager.ReturnToPool(gameObject, PoolType.Enemy);
     }
     IEnumerator Maneuver()
     {
@@ -96,14 +91,24 @@ public class EnemyAi : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.layer == 9)
         {
-            OnDeath(transform);
+            Debug.Log("Done");
+            scoreContainer.score++;
+            var explosion = poolManager.GetObjectFromPool(PoolType.Explosion);
+            explosion.transform.position = gameObject.transform.position;
+            explosion.transform.rotation = Quaternion.identity;
+            explosion.GetComponent<Detonator>().Explode();
+            poolManager.ReturnToPool(gameObject, PoolType.Enemy);
         }
     }
 
     void Shooting()
     {
-        Shoot(shootPosition, Vector3.back * 100, "Enemy");
+        var bullet = poolManager.GetObjectFromPool(PoolType.Bullet);
+        bullet.transform.position = shootPosition.transform.position;
+        bullet.transform.rotation = Quaternion.identity;
+        bullet.GetComponent<Rigidbody>().velocity = Vector3.back * bulletSpeed;
+        bullet.layer = 8;
     }
 }
