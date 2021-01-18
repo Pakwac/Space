@@ -6,8 +6,7 @@ public class EnemySpawnManager : MonoBehaviour
 {
     Camera cam;
 
-    public delegate void SpawnEnemyNeed(Vector3 spawnPosition);
-    public static event SpawnEnemyNeed NeedSpawnEnemy;
+    PoolManager poolManager;
 
     float x_left;
     float x_right;
@@ -19,7 +18,7 @@ public class EnemySpawnManager : MonoBehaviour
     float waveTime;
     [SerializeField]
     float spawnTime;
-    
+
     IEnumerator SpawnCourutine()
     {
         while (true)
@@ -40,7 +39,7 @@ public class EnemySpawnManager : MonoBehaviour
         Vector3 cameraToObject = transform.position - cam.transform.position;
         distance = -Vector3.Project(cameraToObject, cam.transform.forward).y;
 
-        StartCoroutine("SpawnCourutine");
+        StartCoroutine(SpawnCourutine());
     }
 
     private void Update()
@@ -62,6 +61,8 @@ public class EnemySpawnManager : MonoBehaviour
         float temp = Random.value;
         Vector3 enemyPosition = cam.ViewportToWorldPoint(new Vector3(temp, clampedPos.z, distance));
 
-        NeedSpawnEnemy?.Invoke(enemyPosition);
+        var enemy = PoolManager.Instance.GetObjectFromPool(PoolType.Enemy);
+        enemy.transform.position = enemyPosition;
+        enemy.transform.rotation = Quaternion.identity;
     }
 }

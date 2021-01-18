@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4979115837348835414}
   - component: {fileID: 6468858548491711140}
   - component: {fileID: 2353934568299618611}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Asteroid_1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -62,6 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b95bcb188587aa4ca71c2bced95d754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreConteiner: {fileID: 11400000, guid: e23b707c01d5ad14db773498fcb99a3c, type: 2}
 --- !u!136 &2353934568299618611
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -87,7 +88,7 @@ GameObject:
   - component: {fileID: 6740679336325738233}
   - component: {fileID: 3799125370412621002}
   - component: {fileID: 722524096920823635}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Asteroid_01_S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
