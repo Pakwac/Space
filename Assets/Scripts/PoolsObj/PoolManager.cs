@@ -3,34 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+public class PoolManager : MonoBehaviour,  IPoolManager
 {
-        [SerializeField]
-        public List<GameObject> Asteroids;
-        [SerializeField]
-        public List<GameObject> Enemies;
-        [SerializeField]
-        public List<GameObject> Bullets;
-        [SerializeField]
-        public List<GameObject> Explosions;
+    IPrefabInstantiator instantiator;
 
-        public Dictionary<PoolType, List<GameObject>> PrefabsMap;
-        Dictionary<PoolType, Queue<GameObject>> poolDictionary;
+    Dictionary<PoolType, Queue<GameObject>> poolDictionary;
 
     public static PoolManager Instance;
+
+    PoolManager(IPrefabInstantiator inst)
+    {
+       
+    }
 
     private void Awake()
     {
         Instance = this;
-
-        PrefabsMap = new Dictionary<PoolType, List<GameObject>>();
-        PrefabsMap.Add(PoolType.Asteroid, Asteroids);
-        PrefabsMap.Add(PoolType.Enemy, Enemies);
-        PrefabsMap.Add(PoolType.Bullet, Bullets);
-        PrefabsMap.Add(PoolType.Explosion, Explosions);
-
+        instantiator = gameObject.GetComponent<PrefabInstantiator>();
         poolDictionary = new Dictionary<PoolType, Queue<GameObject>>();
 
+        
         foreach (PoolType pt in Enum.GetValues(typeof(PoolType)))
         {
             Queue<GameObject> queue = new Queue<GameObject>();
@@ -38,7 +30,7 @@ public class PoolManager : MonoBehaviour
 
             for (int i = 0; i < 20; i++)
             {
-                GameObject obj = Instantiate(PrefabsMap[pt][UnityEngine.Random.Range(0, PrefabsMap[pt].Count)]);
+                GameObject obj = instantiator.InstantiatePrefab(pt);
                 obj.SetActive(false);
                 queue.Enqueue(obj);
             }
@@ -55,7 +47,7 @@ public class PoolManager : MonoBehaviour
         }
         else
         {
-            GameObject objecToSpawn = Instantiate(PrefabsMap[pt][UnityEngine.Random.Range(0, PrefabsMap[pt].Count)]);
+            GameObject objecToSpawn = instantiator.InstantiatePrefab(pt);
             objecToSpawn.SetActive(true);
             return objecToSpawn;
         }

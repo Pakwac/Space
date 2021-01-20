@@ -12,9 +12,6 @@ public class PlayerShootController : MonoBehaviour
     [SerializeField]
     public GameObject shootPosition;
 
-    [SerializeField]
-    int typeFire = 0;// это  поле нужно для дальнейшей реализации системы разного оружия
-    
     PoolManager poolManager;
 
 

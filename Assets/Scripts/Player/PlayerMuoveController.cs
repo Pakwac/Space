@@ -11,6 +11,8 @@ public class PlayerMuoveController : MonoBehaviour
     [SerializeField]
     GameObject motherSheep;
     Vector3 startPosition;
+    [SerializeField]
+    Joystick joystick;
 
     float distance;
     Camera cam;
@@ -33,9 +35,11 @@ public class PlayerMuoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float moveY = Input.GetAxis("Vertical");
-        float moveX = Input.GetAxis("Horizontal");
-       
+        //float moveY = Input.GetAxis("Vertical");
+        //float moveX = Input.GetAxis("Horizontal");
+        float moveY = joystick.Vertical;
+        float moveX = joystick.Horizontal;
+
         var temp = Mathf.Clamp(moveX * 50, -50, 50);
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.x, -temp), speed * Time.deltaTime);

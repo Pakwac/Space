@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShotController : MonoBehaviour// IPooledObject
+public class ShotController : MonoBehaviour
 {
     PoolManager poolManager;
 

@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class PlayerLifetimeController : MonoBehaviour
 {
+    public static System.Action onDead;
+    public bool isAlive;
 
+    private void Start()
+    {
+         isAlive = true;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Shot") || other.CompareTag("Enemy"))
@@ -12,7 +18,7 @@ public class PlayerLifetimeController : MonoBehaviour
             var explosion = PoolManager.Instance.GetObjectFromPool(PoolType.Explosion);
             explosion.transform.position = gameObject.transform.position;
             explosion.transform.rotation = Quaternion.identity;
-            explosion.GetComponent<Detonator>().Explode();
+            onDead?.Invoke();
             gameObject.SetActive(false);
         }
     }

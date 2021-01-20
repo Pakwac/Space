@@ -30,7 +30,6 @@ public class AsteroidLifetimeController : MonoBehaviour
             var explosion = poolManager.GetObjectFromPool(PoolType.Explosion);
             explosion.transform.position = gameObject.transform.position;
             explosion.transform.rotation = Quaternion.identity;
-            explosion.GetComponent<Detonator>().Explode();
             poolManager.ReturnToPool(gameObject, PoolType.Asteroid);
         }
     }

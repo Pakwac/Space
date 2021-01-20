@@ -7,9 +7,6 @@ public class EnemyAi : MonoBehaviour
     [SerializeField]
     List<GameObject> bullets;
 
-    [SerializeField]
-    int typeFire = 1;
-    
     PoolManager poolManager;
 
     private int bulletSpeed = 100;
@@ -34,7 +31,7 @@ public class EnemyAi : MonoBehaviour
         cam = Camera.main;
         Vector3 cameraToObject = transform.position - cam.transform.position;
         distance = -Vector3.Project(cameraToObject, cam.transform.forward).y;
-        
+
         var leftBot = cam.ViewportToWorldPoint(new Vector3(0, 0, distance));
         var rightTop = cam.ViewportToWorldPoint(new Vector3(1, 1, distance));
 
@@ -52,13 +49,13 @@ public class EnemyAi : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            moveX = Random.Range(-1f,1f);
+            moveX = Random.Range(-1f, 1f);
             side = Vector3.right * moveX * 50 * Time.deltaTime;
             yield return new WaitForSeconds(1f);
             moveX = 0;
             side = Vector3.zero;
         }
-    }    
+    }
 
     IEnumerator ShootingCorutine()
     {
@@ -72,7 +69,7 @@ public class EnemyAi : MonoBehaviour
     {
         var tilt = Mathf.Clamp(moveX * 50, -50, 50);
         Vector3 forward = Vector3.back * speed * Time.deltaTime;
-        
+
         transform.Translate(side + forward);
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.x, -tilt), speed * Time.deltaTime);
 
@@ -93,12 +90,10 @@ public class EnemyAi : MonoBehaviour
     {
         if (other.gameObject.layer == 9)
         {
-            Debug.Log("Done");
             scoreContainer.score++;
             var explosion = poolManager.GetObjectFromPool(PoolType.Explosion);
             explosion.transform.position = gameObject.transform.position;
             explosion.transform.rotation = Quaternion.identity;
-            explosion.GetComponent<Detonator>().Explode();
             poolManager.ReturnToPool(gameObject, PoolType.Enemy);
         }
     }
