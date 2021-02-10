@@ -1,16 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class EnemyAi : MonoBehaviour
 {
-    [SerializeField]
-    List<GameObject> bullets;
-
+    [Inject]
     PoolManager poolManager;
 
-    private int bulletSpeed = 100;
+    [SerializeField]
+    PrefabConfig config;
 
+    [SerializeField]
+    ScriptableScore scoreContainer;
+
+
+
+    private int bulletSpeed = 100;
     float speed = 10;
     float distance;
     Camera cam;
@@ -22,12 +28,10 @@ public class EnemyAi : MonoBehaviour
     [SerializeField]
     Transform shootPosition;
 
-    [SerializeField]
-    ScriptableScore scoreContainer;
+
 
     void Start()
     {
-        poolManager = PoolManager.Instance;
         cam = Camera.main;
         Vector3 cameraToObject = transform.position - cam.transform.position;
         distance = -Vector3.Project(cameraToObject, cam.transform.forward).y;
@@ -97,6 +101,7 @@ public class EnemyAi : MonoBehaviour
             poolManager.ReturnToPool(gameObject, PoolType.Enemy);
         }
     }
+  
 
     void Shooting()
     {
@@ -104,6 +109,13 @@ public class EnemyAi : MonoBehaviour
         bullet.transform.position = shootPosition.transform.position;
         bullet.transform.rotation = Quaternion.identity;
         bullet.GetComponent<Rigidbody>().velocity = Vector3.back * bulletSpeed;
-        bullet.layer = 8;
+
+        foreach (Transform transform in bullet.transform.GetComponentsInChildren<Transform>(true))
+        {
+            transform.gameObject.layer = 8;
+        }
+
     }
+
+    public class Facktory : PlaceholderFactory<EnemyAi> { }
 }

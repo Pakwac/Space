@@ -1,31 +1,47 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
-public class PrefabInstantiator : MonoBehaviour, IPrefabInstantiator
+public class PrefabInstantiator
 {
+    [Inject]
+    GameConfig gameConfig;
+    [Inject]
+    AsteroidLifetimeController.Facktory asteroidFacktory;
+    [Inject]
+    EnemyAi.Facktory enemyFacktory;
+    [Inject]
+    Explosion.Facktory explosionFacktory;
+    [Inject]
+    ShotController.Facktory shotFacktory;
+
     public Dictionary<PoolType, List<GameObject>> PrefabsMap;
+   
 
-    [SerializeField]
-    public List<GameObject> Asteroids;
-    [SerializeField]
-    public List<GameObject> Enemies;
-    [SerializeField]
-    public List<GameObject> Bullets;
-    [SerializeField]
-    public List<GameObject> Explosions;
-
-
-    void Awake()
+    public void StartMapping()
     {
         PrefabsMap = new Dictionary<PoolType, List<GameObject>>();
-        PrefabsMap.Add(PoolType.Asteroid, Asteroids);
-        PrefabsMap.Add(PoolType.Enemy, Enemies);
-        PrefabsMap.Add(PoolType.Bullet, Bullets);
-        PrefabsMap.Add(PoolType.Explosion, Explosions);
+        PrefabsMap.Add(PoolType.Asteroid, gameConfig.Asteroids);
+        PrefabsMap.Add(PoolType.Enemy, gameConfig.Enemies);
+        PrefabsMap.Add(PoolType.Bullet, gameConfig.Bullets);
+        PrefabsMap.Add(PoolType.Explosion, gameConfig.Explosions);
     }
     public GameObject InstantiatePrefab(PoolType pt)
     {
-        return Instantiate(PrefabsMap[pt][UnityEngine.Random.Range(0, PrefabsMap[pt].Count)]);
+        switch (pt)
+        {
+            case PoolType.Asteroid:
+              return asteroidFacktory.Create().gameObject;
+            case PoolType.Enemy:
+                return enemyFacktory.Create().gameObject;
+            case PoolType.Explosion:
+                return explosionFacktory.Create().gameObject;
+            case PoolType.Bullet:
+                return shotFacktory.Create().gameObject;
+        }
+        throw new System.Exception($"Unknown type {pt}"); 
     }
+
+   
 }

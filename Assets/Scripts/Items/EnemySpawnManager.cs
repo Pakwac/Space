@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class EnemySpawnManager : MonoBehaviour
 {
-    Camera cam;
-
+    [Inject]
     PoolManager poolManager;
+
+    Camera cam;
 
     float x_left;
     float x_right;
@@ -25,9 +27,9 @@ public class EnemySpawnManager : MonoBehaviour
         {
             for (int i = 0; i < 5; i++)
             {
-                SpawnEnemy();
                 yield return new WaitForSeconds(Random.Range(1, 3));
-                
+                SpawnEnemy();
+
             }
             yield return new WaitForSeconds(waveTime);
         }
@@ -42,10 +44,6 @@ public class EnemySpawnManager : MonoBehaviour
         StartCoroutine(SpawnCourutine());
     }
 
-    private void Update()
-    {
-  
-    }
     void SpawnEnemy()
     {
         var leftBot = cam.ViewportToWorldPoint(new Vector3(0, 0));
@@ -61,7 +59,7 @@ public class EnemySpawnManager : MonoBehaviour
         float temp = Random.value;
         Vector3 enemyPosition = cam.ViewportToWorldPoint(new Vector3(temp, clampedPos.z, distance));
 
-        var enemy = PoolManager.Instance.GetObjectFromPool(PoolType.Enemy);
+        var enemy = poolManager.GetObjectFromPool(PoolType.Enemy);
         enemy.transform.position = enemyPosition;
         enemy.transform.rotation = Quaternion.identity;
     }

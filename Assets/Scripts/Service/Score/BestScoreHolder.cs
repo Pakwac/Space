@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class BestScoreHolder : MonoBehaviour
 {
-    TextMeshProUGUI bestScore;
+    [SerializeField]
+    ScriptableScore scoreContainer;
+    Text bestScore;
     int score = 0;
     
     private void Start()
@@ -13,10 +15,34 @@ public class BestScoreHolder : MonoBehaviour
         if (PlayerPrefs.HasKey("MaxScore"))
         {
             score = PlayerPrefs.GetInt("MaxScore");
-            bestScore = GetComponent<TextMeshProUGUI>();
-            bestScore.text = "Best result " + score.ToString();
+            bestScore = GetComponent<Text>();
+            bestScore.text = "BEST RESULT " + score.ToString();
         }
-        else bestScore.text = "Best result " + score.ToString();
-       
+        else bestScore.text = "BEST RESULT " + scoreContainer.score.ToString();
+    }
+
+    private void Update()
+    {
+        if(score < scoreContainer.score)
+        {
+            bestScore.text = "BEST RESULT " + scoreContainer.score.ToString();
+        }
+    }
+    private void OnApplicationPause(bool pause)
+    {
+        SetNewScore();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SetNewScore();
+    }
+
+    private void SetNewScore()
+    {
+        if (score < scoreContainer.score)
+        {
+            PlayerPrefs.SetInt("MaxScore", scoreContainer.score);
+        }
     }
 }

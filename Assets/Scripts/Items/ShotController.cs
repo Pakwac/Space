@@ -1,15 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class ShotController : MonoBehaviour
 {
+    [Inject]
     PoolManager poolManager;
 
-    private void Start()
+    [SerializeField]
+    PrefabConfig config;
+    public GameObject prefab;
+    Rigidbody rb;
+
+    private void Awake()
     {
-        poolManager = PoolManager.Instance;
+        prefab = Instantiate(config.prefab[UnityEngine.Random.Range(0, config.prefab.Count)], gameObject.transform);
+        if (GetComponent<Rigidbody>() == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+            rb.useGravity = false;
+        }
+        else
+        {
+            rb = GetComponent<Rigidbody>();
+            rb.useGravity = false;
+        }
     }
+
     private void OnEnable()
     {
         StartCoroutine("Ilifetime");
@@ -21,11 +39,16 @@ public class ShotController : MonoBehaviour
         poolManager.ReturnToPool(gameObject, PoolType.Bullet);
     }
 
+    
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
+        if (other.gameObject.layer == 8 || other.gameObject.layer == 9 || other.gameObject.layer == 10)
         {
             poolManager.ReturnToPool(gameObject, PoolType.Bullet);
         }
     }
+
+
+    public class Facktory : PlaceholderFactory<ShotController> { }
 }

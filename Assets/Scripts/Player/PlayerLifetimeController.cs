@@ -1,21 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class PlayerLifetimeController : MonoBehaviour
 {
+    [Inject]
+    PoolManager poolManager;
     public static System.Action onDead;
-    public bool isAlive;
 
-    private void Start()
-    {
-         isAlive = true;
-    }
+   
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Shot") || other.CompareTag("Enemy"))
+        if (other.gameObject.layer == 8 || other.gameObject.layer == 10)
         {
-            var explosion = PoolManager.Instance.GetObjectFromPool(PoolType.Explosion);
+            var explosion = poolManager.GetObjectFromPool(PoolType.Explosion);
             explosion.transform.position = gameObject.transform.position;
             explosion.transform.rotation = Quaternion.identity;
             onDead?.Invoke();

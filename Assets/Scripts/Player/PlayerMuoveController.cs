@@ -42,9 +42,9 @@ public class PlayerMuoveController : MonoBehaviour
 
         var temp = Mathf.Clamp(moveX * 50, -50, 50);
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.x, -temp), speed * Time.deltaTime);
-        transform.Translate(Vector3.right * moveX * Time.deltaTime * speed, Space.World);
-        transform.Translate(Vector3.forward * moveY * Time.deltaTime * speed, Space.World);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.x, temp), speed * Time.deltaTime);
+        transform.Translate(-Vector3.right * moveX * Time.deltaTime * speed, Space.World);
+        transform.Translate(-Vector3.forward * moveY * Time.deltaTime * speed, Space.World);
 
         var leftBot = cam.ViewportToWorldPoint(new Vector3(0, 0, distance));
         var rightTop = cam.ViewportToWorldPoint(new Vector3(1, 1, distance));

@@ -8,9 +8,9 @@ public class LobbyLoadGame : MonoBehaviour
 {
     AsyncOperation level;
 
-    // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
+        yield return new WaitForSeconds(1);
         level = SceneManager.LoadSceneAsync(1);
         level.allowSceneActivation = false;
     }

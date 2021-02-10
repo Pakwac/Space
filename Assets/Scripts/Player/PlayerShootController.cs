@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class PlayerShootController : MonoBehaviour
 {
+    [Inject]
+    PoolManager poolManager;
+
     [SerializeField]
     float fireRate = 0.5f;
     [SerializeField]
@@ -12,26 +16,24 @@ public class PlayerShootController : MonoBehaviour
     [SerializeField]
     public GameObject shootPosition;
 
-    PoolManager poolManager;
-
-
     private int bulletSpeed = 100;
-
-    private void Start()
-    {
-        poolManager = PoolManager.Instance;
-    }
 
     void Update()
     {
-            if (nextFire <= 0)
+        if (nextFire <= 0)
+        {
+            nextFire += fireRate;
+            var bullet = poolManager.GetObjectFromPool(PoolType.Bullet);
+           
+            bullet.transform.position = shootPosition.transform.position;
+            bullet.transform.rotation = Quaternion.identity;
+            bullet.GetComponentInChildren<Rigidbody>().velocity = Vector3.forward * bulletSpeed;
+
+            foreach (Transform transform in bullet.transform.GetComponentsInChildren<Transform>(true))
             {
-                nextFire += fireRate;
-                var bullet = poolManager.GetObjectFromPool(PoolType.Bullet);
-                bullet.transform.position = shootPosition.transform.position;
-                bullet.transform.rotation = Quaternion.identity;
-                bullet.GetComponent<Rigidbody>().velocity = Vector3.forward * bulletSpeed;
-                bullet.layer = 9;
+                transform.gameObject.layer = 9;
+            }
+
         }
         if (nextFire > 0) nextFire -= Time.deltaTime;
     }

@@ -6,27 +6,32 @@ using UnityEngine.UI;
 public class UiController : MonoBehaviour
 {
     [SerializeField]
-    GameObject reloadButtom;
+    GameObject joystic;
     [SerializeField]
-    GameObject ExitButtom;
+    List<GameObject> objectsToHide;
     [SerializeField]
     GameObject player;
 
     
     void Start()
     {
-        reloadButtom.SetActive(false);
-        ExitButtom.SetActive(false);
+        foreach (var item in objectsToHide)
+        {
+            item.SetActive(false);
+        }
+        joystic.SetActive(true);
         PlayerLifetimeController.onDead += PlayerIsDead;
     }
-
 
     void PlayerIsDead()
     {
         if (player != null)
         {
-            reloadButtom.SetActive(true);
-            ExitButtom.SetActive(true);
+            foreach (var item in objectsToHide)
+            {
+                item.SetActive(true);
+            }
+            joystic.SetActive(false);
         }
     }
 }

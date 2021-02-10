@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class AsteroidSpawnManager : MonoBehaviour
 {
     Camera cam;
-
+    [Inject]
     PoolManager poolManager;
 
     float x_left;
@@ -26,7 +27,6 @@ public class AsteroidSpawnManager : MonoBehaviour
   
     void Start()
     {
-        poolManager = PoolManager.Instance;
         cam = Camera.main;
         Vector3 cameraToObject = transform.position - cam.transform.position;
         distance = -Vector3.Project(cameraToObject, cam.transform.forward).y;
@@ -52,11 +52,9 @@ public class AsteroidSpawnManager : MonoBehaviour
 
         var asteroid = poolManager.GetObjectFromPool(PoolType.Asteroid);
         asteroid.transform.position = asteroidPosition;
-        if (asteroid.GetComponent<Rigidbody>() != null)
-        {
-            asteroid.GetComponent<Rigidbody>().velocity = Vector3.back * Random.Range(5, 10);
-            asteroid.GetComponent<Rigidbody>().angularVelocity = Random.insideUnitSphere;
-            asteroid.GetComponent<Transform>().rotation = Random.rotation;
-        }
     }
+
+
+
+    
 }

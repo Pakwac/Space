@@ -9320,7 +9320,6 @@ GameObject:
   - component: {fileID: 258474981483012404}
   - component: {fileID: 258474981501363316}
   - component: {fileID: 258474981501394388}
-  - component: {fileID: 258474981476075766}
   m_Layer: 0
   m_Name: WFXMR_Explosion LandMine
   m_TagString: Untagged
@@ -14039,19 +14038,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &258474981476075766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258474981482659092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fd2e8874f60266498a388d7229a1bac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnlyDeactivate: 0
 --- !u!1 &258474981482659094
 GameObject:
   m_ObjectHideFlags: 0

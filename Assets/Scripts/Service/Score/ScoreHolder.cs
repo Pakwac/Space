@@ -10,7 +10,18 @@ public class ScoreHolder : MonoBehaviour
     ScriptableScore scoreConteiner;
 
     public int MaxScore;
-    
+
+    private void Start()
+    {
+        
+
+        if (PlayerPrefs.HasKey("MaxScore"))
+        {
+            MaxScore = PlayerPrefs.GetInt("MaxScore", MaxScore);
+        }
+        else MaxScore = 0;
+    }
+
     public void Update()
     {
         if ( MaxScore < scoreConteiner.score )
@@ -19,21 +30,13 @@ public class ScoreHolder : MonoBehaviour
         }
 
     }
-    private void Start()
-    {
-        if (PlayerPrefs.HasKey("MaxScore"))
-        {
-            MaxScore = PlayerPrefs.GetInt("MaxScore", MaxScore);
-        }
-        else MaxScore = 0;
-    }
-
-//#if UNITY_ANDROID && !UNITY_EDITOR
-//    private void OnApplicationPause(bool pause)
-//    {
-//        if (pause) File.WriteAllText(path, JsonUtility.ToJson(sv));
-//    }
-//#endif
+   
+    //#if UNITY_ANDROID && !UNITY_EDITOR
+    //    private void OnApplicationPause(bool pause)
+    //    {
+    //        if (pause) File.WriteAllText(path, JsonUtility.ToJson(sv));
+    //    }
+    //#endif
     private void OnApplicationQuit()
     {
         PlayerPrefs.SetInt("MaxScore", MaxScore);

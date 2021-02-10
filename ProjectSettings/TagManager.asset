@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Shot
   - Enemy
+  - FxTemporaire
+  - Asteroid
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - 
   - Enemy
   - Player
-  - 
+  - Asteroid
   - 
   - 
   - 

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8cccf5d4841f844fac0bb24b524b1c6, type: 3}
+  m_Name: Game Config
+  m_EditorClassIdentifier: 
+  Asteroids:
+  - {fileID: 6996778398323794390, guid: 5491e8e244e82f9479169195bef815b4, type: 3}
+  Enemies:
+  - {fileID: 3065099313209624923, guid: 84f90d5be5df378469cf2405eeac265a, type: 3}
+  Bullets:
+  - {fileID: 2300765192701870091, guid: c2d309b54c98de14f95b9f9501624a81, type: 3}
+  Explosions:
+  - {fileID: 8089036257321227363, guid: 19c39b9bb637b6242a9470aff4943ef9, type: 3}

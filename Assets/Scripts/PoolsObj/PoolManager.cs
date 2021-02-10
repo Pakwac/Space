@@ -2,46 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
-public class PoolManager : MonoBehaviour,  IPoolManager
+public class PoolManager
 {
-    IPrefabInstantiator instantiator;
-
-    Dictionary<PoolType, Queue<GameObject>> poolDictionary;
-
-    public static PoolManager Instance;
-
-    PoolManager(IPrefabInstantiator inst)
-    {
-       
-    }
-
-    private void Awake()
-    {
-        Instance = this;
-        instantiator = gameObject.GetComponent<PrefabInstantiator>();
-        poolDictionary = new Dictionary<PoolType, Queue<GameObject>>();
-
-        
-        foreach (PoolType pt in Enum.GetValues(typeof(PoolType)))
-        {
-            Queue<GameObject> queue = new Queue<GameObject>();
-            poolDictionary.Add(pt, queue);
-
-            for (int i = 0; i < 20; i++)
-            {
-                GameObject obj = instantiator.InstantiatePrefab(pt);
-                obj.SetActive(false);
-                queue.Enqueue(obj);
-            }
-        }
-    }
+    [Inject]
+    PrefabInstantiator instantiator;
+    [Inject]
+    StartingServicePool startingService;
 
     public GameObject GetObjectFromPool(PoolType pt)
     {
-        if (poolDictionary[pt].Count > 0)
+        if (startingService.poolDictionary[pt].Count > 0)
         {
-            GameObject objecToSpawn = poolDictionary[pt].Dequeue();
+            GameObject objecToSpawn = startingService.poolDictionary[pt].Dequeue();
             objecToSpawn.SetActive(true);
             return objecToSpawn;
         }
@@ -55,7 +29,7 @@ public class PoolManager : MonoBehaviour,  IPoolManager
 
     public void ReturnToPool(GameObject obj, PoolType pt)
     {
-        poolDictionary[pt].Enqueue(obj);
+        startingService.poolDictionary[pt].Enqueue(obj);
         obj.SetActive(false);
     }
 

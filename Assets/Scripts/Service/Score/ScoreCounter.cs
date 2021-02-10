@@ -1,22 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 public class ScoreCounter : MonoBehaviour
 {
     [SerializeField]
-    ScriptableScore scoreConteiner;
+    ScriptableScore scoreContainer;
 
-    public TextMeshProUGUI scoreText;
+    public Text scoreText;
+    const int startScore = 0;
 
     void Start()
     {
-        scoreText = GetComponent<TextMeshProUGUI>();
-        scoreText.text = scoreConteiner.score.ToString();
+        PlayerLifetimeController.onDead += OnPlayerDead;
+        scoreText = GetComponent<Text>();
+        scoreText.text = "SCORE " + startScore.ToString();
+        scoreContainer.score = startScore;
     }
 
     public void Update()
     {
-        scoreText.text = scoreConteiner.score.ToString();
+        scoreText.text = "SCORE " + scoreContainer.score.ToString();
     }
+
+    void OnPlayerDead()
+    {
+        scoreContainer.score = 0;
+    }
+
 }
